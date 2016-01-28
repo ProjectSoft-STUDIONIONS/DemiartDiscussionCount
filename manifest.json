@@ -34,7 +34,6 @@
 	},
 	"permissions": [
 		"tabs",
-		"cookies",
 		"notifications",
 		"http://demiart.ru/forum/*",
 		"http://demicolor.demiart.ru/*",
