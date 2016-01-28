@@ -41,14 +41,15 @@
 			document.getElementsByTagName('head')[0].appendChild(link);
 		};
 		chrome.runtime.onMessage.addListener(function(msg, ob, sendResponse) {
-			var s = document.getElementById('scrolldiscuss'),
-				su = document.getElementById('scrollup');
 			if(msg.message == 'ddc'){
-				obddc.url = msg.url;
+				/*! 
+				** Полностью вырубаем функционал взаимодействия отображение ссылок счётчика на страницах форума
+				**/
+				/*obddc.url = msg.url;
 				obddc.def = msg.def;
 				obddc.ddc = msg.ddc;
 				if(obddc.ddc){
-					/*if(s){
+					if(s){
 						s.innerHTML = insetrLink(obddc);
 					}else{
 						if(su){
@@ -57,14 +58,14 @@
 							su.parentNode.insertBefore(s,su);
 							s.innerHTML = insetrLink(obddc);
 						}
-					}*/
+					}
 					$('#adiscuss2, #adiscuss').html(insetrLink(obddc));
 				}else{
-					/*if(s){
+					if(s){
 						s.parentNode.removeChild(s);
 					}
-					$('#adiscuss2, #adiscuss').html("");*/
-				}
+					$('#adiscuss2, #adiscuss').html("");
+				}*/
 			}else if(msg.message=='favicon'){
 				setFaviconTag(msg.data);
 			}

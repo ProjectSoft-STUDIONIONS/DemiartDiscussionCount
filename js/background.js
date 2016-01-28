@@ -169,7 +169,7 @@ window['demiColorVer'] = '1.0.2';
 			var dc = 0;
 			for(var i = 0; i<tabs.length;++i){
 				var lt = tabs[i].id,
-				req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
+				req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
 				if(req.test(tabs[i].url)){
 					++dc;
 					chrome.tabs.sendMessage(lt,{ddc:dcc_c,url:dcc_u,def:localStorage['url_forum'],message:'ddc'});
@@ -237,11 +237,14 @@ window['demiColorVer'] = '1.0.2';
 		... Создаём асинхронный запрос к серверу
 		*/
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'http://demiart.ru/forum/index.php?act=ST&CODE=discuss&_='+(new Date()).getTime());
+		xhr.open('GET', 'http://demiart.ru/forum/index.php?act=ST&CODE=discuss&rand='+(new Date()).getTime(), true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.setRequestHeader("Cache-Control", "no-cache");
+		xhr.setRequestHeader("Pragma", "no-cache");
 		/*
 		... Отправляем запрос на сервер
 		*/
-		xhr.send('');
+		xhr.send(null);
 		/*
 		... Отслеживаем состояние запроса
 		*/
@@ -308,7 +311,7 @@ window['demiColorVer'] = '1.0.2';
 				var dc = 0;
 				for(var i = 0; i<tabs.length;++i){
 					var lt = tabs[i].id,
-						req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
+						req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
 					if(req.test(tabs[i].url)){
 						++dc;
 						chrome.tabs.sendMessage(lt,{ddc:dcc_c,url:dcc_u,def:localStorage['url_forum'],message:'ddc'});
@@ -332,7 +335,7 @@ window['demiColorVer'] = '1.0.2';
 			/*
 			... проверка url вкладки
 			*/
-			var req = /(http:\/\/demiart.ru\/forum)/ig;
+			var req = /(^http:\/\/demiart.ru\/forum)/ig;
 			if(req.test(tab.url)){
 				/*
 				... Если таб был закрыт.
@@ -363,7 +366,7 @@ window['demiColorVer'] = '1.0.2';
 		chrome.tabs.query({}, function(tabs) {
 			for(var i = 0; i<tabs.length;++i){
 				var lt = tabs[i].id,
-					req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
+					req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
 				if(req.test(tabs[i].url)){
 					chrome.tabs.sendMessage(lt,{ddc:dcc_c,url:dcc_u,def:localStorage['url_forum'],message:'ddc'});
 					if(localStorage['favicon']=="true"){
@@ -453,7 +456,7 @@ window['demiColorVer'] = '1.0.2';
 	chrome.browserAction.setBadgeBackgroundColor({color:'#d22d2d'});
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 		statusTab = changeInfo.status;
-		var req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig,
+		var req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig,
 		regusr = /(UserCP)/ig,
 		reqmes = /(qms.php)/ig;
 		if(changeInfo.status=='loading' && localStorage['demiColor'] == 'true'){
@@ -461,7 +464,7 @@ window['demiColorVer'] = '1.0.2';
 				executeScripts(tab.id);
 			}
 		};
-		req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
+		req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
 		// Добавить проверку что не месенджер!!!
 		reqmes = /(qms.php)/ig;
 		if(changeInfo.status=='loading' && req.test(tab.url) && reqmes.test(tab.url)==false){
@@ -483,7 +486,7 @@ window['demiColorVer'] = '1.0.2';
 		if(tabDDC!=undefined && localStorage['viewtab']=='true'){
 			chrome.tabs.query({}, function(tabvs){
 				for(var i=0; i<tabvs.length; ++i){
-					var req = /(http:\/\/demiart.ru\/forum)/ig,
+					var req = /(^http:\/\/demiart.ru\/forum)/ig,
 					td = tabvs[i];
 					if(req.test(td.url) && tabDDC.id==td.id){
 						chrome.tabs.update(tabDDC.id, {'url':discussURL, 'active':true}, tabCreate);
@@ -511,7 +514,7 @@ window['demiColorVer'] = '1.0.2';
 						var ta = false;
 						for(var i = 0; i<tabs.length; ++i){
 							var tab = tabs[i],
-							req = /(http:\/\/demiart.ru\/forum)/ig;
+							req = /(^http:\/\/demiart.ru\/forum)/ig;
 							if(tabDDC.id==tab.id && req.test(tab.url)){
 								chrome.tabs.update(tab.id,{selected : true}, tabCreate);
 								ta = true;
@@ -535,7 +538,7 @@ window['demiColorVer'] = '1.0.2';
 	chrome.tabs.query({}, function(tabs) {
 		for(var i = 0; i<tabs.length;++i){
 			var lt = tabs[i].id,
-				req = /(http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
+				req = /(^http:\/\/demiart.ru\/forum\/(.+.php\?)?)/ig;
 			if(req.test(tabs[i].url)){
 				executeDccScript(tabs[i].id);
 				setTimeout(function(){chrome.tabs.sendMessage(lt,{data:"/favicon.ico", message:'favicon'});}, 100);

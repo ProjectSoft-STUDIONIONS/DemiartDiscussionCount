@@ -33,11 +33,12 @@
 		"name": "ProjectSoft"
 	},
 	"permissions": [
+		"tabs",
+		"notifications",
 		"http://demiart.ru/forum/*",
 		"http://demicolor.demiart.ru/*",
 		"http://morgoth.ru/*",
 		"http://www.youtube.com/c/demiartru",
-		"tabs",
 		"contextMenus"
 	],
 	"browser_action": {
