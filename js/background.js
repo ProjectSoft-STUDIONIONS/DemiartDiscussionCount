@@ -476,7 +476,7 @@ window['demiColorVer'] = '1.0.2';
 			}, 500);
 			stopAnimation();
 			clearTimeout(calarm);
-			calarm = setTimeout(onAlarm, 2500);
+			calarm = setTimeout(onAlarm, 5000);
 		}
 	});
 	chrome.browserAction.onClicked.addListener(function(tab) {

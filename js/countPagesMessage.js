@@ -46,7 +46,7 @@
 				obddc.def = msg.def;
 				obddc.ddc = msg.ddc;
 				if(obddc.ddc){
-					if(s){
+					/*if(s){
 						s.innerHTML = insetrLink(obddc);
 					}else{
 						if(su){
@@ -55,7 +55,7 @@
 							su.parentNode.insertBefore(s,su);
 							s.innerHTML = insetrLink(obddc);
 						}
-					}
+					}*/
 					$('#adiscuss2, #adiscuss').html(insetrLink(obddc));
 				}else{
 					if(s){
