@@ -206,15 +206,17 @@
 	btnDDC = '<span id="ddc-button-demicolor">&nbsp;<input type="button" value="'+ddcwindow+'" class="codebuttons '+ddcwindow+' recinput">&nbsp;&nbsp;</span>',
 	$postComment = ($('textarea[name=Post] ~ span').length) ? $('textarea[name=Post] ~ span') : $('textarea[name=Post]'),
 	$ddcFrame;
-	($postComment.length && $getBtn.length) && (
-		($getBtn.selector=='input[value=CODE]') ? $getBtn.after(btnDDC) : $getBtn.before(btnDDC),
-		$ddcFrame = $('<div />', {'id':ddcwindow}).css({'border':'border:1px outset #DDD','margin-top':'18px'}),
-		$postComment.after($ddcFrame),
-		$ddcFrame.demiColor(),
-		$('#ddc-button-demicolor input').click(function(){
-			$ddcFrame.toggle().is(':visible') && $ddcFrame.trigger('ddcfocus');
-			return !1;
-		}),
-		setTimeout(function(){$ddcFrame.hide();}, 50)
-	)
+	if($postComment.length && $getBtn.length) {
+		if($('#ddc-button-demicolor').length<1){
+			($getBtn.selector=='input[value=CODE]') ? $getBtn.after(btnDDC) : $getBtn.before(btnDDC);
+			$ddcFrame = $('<div />', {'id':ddcwindow}).css({'border':'border:1px outset #DDD','margin-top':'18px'});
+			$postComment.after($ddcFrame);
+			$ddcFrame.demiColor();
+			$('#ddc-button-demicolor input').click(function(){
+				$ddcFrame.toggle().is(':visible') && $ddcFrame.trigger('ddcfocus');
+				return !1;
+			});
+			setTimeout(function(){$ddcFrame.hide();}, 50);
+		}
+	}
 }());

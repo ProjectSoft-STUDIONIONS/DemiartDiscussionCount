@@ -9,6 +9,8 @@
 			return '<a href="'+o.url+'" class="noty" title="(+'+o.ddc+') непрочитанные комментарии">+'+o.ddc+'</a>';
 		},
 		nextDDC = function(e){
+			e.preventDefault();
+			return !1;
 			if(e.shiftKey){
 				if(e.keyCode==13 && obddc.ddc){
 					window.location.href = obddc.url;
@@ -58,10 +60,10 @@
 					}*/
 					$('#adiscuss2, #adiscuss').html(insetrLink(obddc));
 				}else{
-					if(s){
+					/*if(s){
 						s.parentNode.removeChild(s);
 					}
-					$('#adiscuss2, #adiscuss').html("");
+					$('#adiscuss2, #adiscuss').html("");*/
 				}
 			}else if(msg.message=='favicon'){
 				setFaviconTag(msg.data);
