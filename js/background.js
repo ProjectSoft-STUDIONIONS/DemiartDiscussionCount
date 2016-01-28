@@ -232,13 +232,31 @@ window['demiColorVer'] = '1.0.2';
 	... chrome.alarms.create('refresh', {periodInMinutes: +localStorage.refresh_interval});
 	... chrome.alarms.onAlarm.addListener(onAlarm);
 	*/
+	user_id = 0,
+	getUserID = function(){
+		/*
+		chrome.cookies.get({
+			name: "member_id",
+			url: "http://demiart.ru/forum/*"
+		}, function(cookie){
+			user_id = parseInt(cookie.value);
+		});
+		*/
+	},
 	onAlarm = function() {
+		/*
+		** Cookie
+		**/
+		//getUserID();
+		
 		/*
 		... Создаём асинхронный запрос к серверу
 		*/
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'http://demiart.ru/forum/index.php?act=ST&CODE=discuss&rand='+(new Date()).getTime(), true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		var xhr = new XMLHttpRequest(),
+			xnr_old = 'http://demiart.ru/forum/index.php?act=ST&CODE=discuss&rand='+(new Date()).getTime();
+			//xnr_dev = 'http://demiart.ru/forum/statistic.php?i='+user_id;
+		xhr.open('GET', xnr_old);
+		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader("Cache-Control", "no-cache");
 		xhr.setRequestHeader("Pragma", "no-cache");
 		/*
@@ -272,7 +290,8 @@ window['demiColorVer'] = '1.0.2';
 			/*
 			... Собственно сам ответ сервера: количество непрочитанных комментариев и ссылка на них
 			*/
-			var response = JSON.parse(xhr.response),
+			
+			var response = JSON.parse(xhr.responseText != "" ? xhr.responseText : "{\"count\":\"1\",\"href\":\"http:\/\/demiart.ru\/forum\/index.php?\"}"),
 			/*
 			... Количество комментариев
 			*/
@@ -281,7 +300,7 @@ window['demiColorVer'] = '1.0.2';
 			... Ссылка на последний непрочитанный комментарий
 			*/
 			discussURL = response.href;
-			if(response.href == 'http://demiart.ru/forum/'){
+			if(response.href == 'http://demiart.ru/forum/' || response.href==""){
 				discussURL = localStorage['url_forum'];
 			}
 			/*
@@ -479,7 +498,7 @@ window['demiColorVer'] = '1.0.2';
 			}, 500);
 			stopAnimation();
 			clearTimeout(calarm);
-			calarm = setTimeout(onAlarm, 5000);
+			calarm = setTimeout(onAlarm, 1000);
 		}
 	});
 	chrome.browserAction.onClicked.addListener(function(tab) {
